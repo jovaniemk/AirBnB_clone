@@ -5,11 +5,18 @@ from uuid import uuid4
 from datetime import datetime
 class BaseModel:
    """BaseModel class"""
-   def __init__(self):
-       self.id = str(uuid4())
-       tmp = datetime.now(tz=None)
-       self.created_at = tmp
-       self.updated_at = tmp
+   def __init__(self, *args, **kwargs):
+      if len(kwargs) > 0:
+         for key, value in kwargs.items():
+            if key != '__class__':
+               if key == 'created_at' or key == 'updated_at':
+                  value = datetime.fromisoformat(value)
+               setattr(self, key, value)
+      else:
+         self.id = str(uuid4())
+         tmp = datetime.now(tz=None)
+         self.created_at = tmp
+         self.updated_at = tmp
    def __str__(self):
       """string representation of an object"""
       return f'[{self.__class__.__name__}] ({self.id}) {self.__dict__}'
