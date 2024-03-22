@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """this module will contain base_model class"""
 
+from models import storage
 from uuid import uuid4
 from datetime import datetime
 class BaseModel:
@@ -17,12 +18,14 @@ class BaseModel:
          tmp = datetime.now(tz=None)
          self.created_at = tmp
          self.updated_at = tmp
+         storage.new(self)
    def __str__(self):
       """string representation of an object"""
       return f'[{self.__class__.__name__}] ({self.id}) {self.__dict__}'
    def save(self):
       """updates updated_at attribute"""
       self.updated_at = datetime.now(tz=None)
+      storage.save()
    def to_dict(self):
       tmp = self.__dict__.copy()
       tmp['__class__'] = self.__class__.__name__
