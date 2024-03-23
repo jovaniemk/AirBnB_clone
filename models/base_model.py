@@ -11,7 +11,7 @@ class BaseModel:
     Args:
     our BaseModel class will acept no arguments or can accept keyword arguments
     """
-    
+
     def __init__(self, *args, **kwargs):
         if len(kwargs) > 0:
             for key, value in kwargs.items():
