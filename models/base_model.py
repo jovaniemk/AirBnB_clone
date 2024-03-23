@@ -15,6 +15,11 @@ class BaseModel:
     a previously created object"""
 
     def __init__(self, *args, **kwargs):
+        """this method will intialize our BaseModel object
+        Args:
+        args: variable size arguments
+        kwargs: variabe size keyword arguments
+        """
         if len(kwargs) > 0:
             for key, value in kwargs.items():
                 if key != '__class__':
