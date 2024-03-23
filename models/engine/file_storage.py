@@ -42,8 +42,8 @@ class FileStorage:
               'place', 'Review']
         l2 = [BaseModel, User, State, City, Amenity, Place, Review]
 
-        if os.path.isfile(FileStorage.__file_path) and
-        os.path.getsize(FileStorage.__file_path) > 0:
+        if (os.path.isfile(FileStorage.__file_path) and
+        os.path.getsize(FileStorage.__file_path) > 0:)
             with open(FileStorage.__file_path, 'r') as f:
                 tmp = json.loads(f.read())
         for key, value in tmp.items():
