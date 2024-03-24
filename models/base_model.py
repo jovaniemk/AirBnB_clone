@@ -40,22 +40,23 @@ class BaseModel:
 
     def __str__(self):
         """this instance method will return string representation of an object
-        this string representation will contain class_name, 
+        this string representation will contain class_name,
         id of the object and dict attribute of the object"""
         return f'[{self.__class__.__name__}] ({self.id}) {self.__dict__}'
 
     def save(self):
-        """this method will save the new attributes of the object to 
-        the File_Storage class and will change to the updated_at attribute 
+        """this method will save the new attributes of the object to
+        the File_Storage class and will change to the updated_at attribute
         to the new time"""
         self.updated_at = datetime.now(tz=None)
         storage.save()
 
     def to_dict(self):
-        """this instance method will return a dictionary representation of an object
-        this method will copy the dict attribute of the object with some modifications
-        it will change cretaed_at and updated_at attribute to iso_format and add __class__
-        key to the dictionary"""
+        """this instance method will return a dictionary representation
+        of an object, this method will copy the dict attribute of the
+        object with some modifications.it will change cretaed_at and
+        updated_at attribute to iso_format and add __class__ key to
+        the dictionary"""
         tmp = self.__dict__.copy()
         tmp['__class__'] = self.__class__.__name__
         tmp['created_at'] = self.created_at.isoformat()
