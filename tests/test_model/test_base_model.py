@@ -5,7 +5,7 @@
 import unittest
 from models.base_model import BaseModel
 from uuid import uuid4
-from datetime import datetime
+import datetime
 
 
 class TestBaseModel(unittest.TestCase):
@@ -23,7 +23,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(type(base1.id), str)
         self.assertEqual(type(base1.created_at), datetime.datetime)
         self.assertEqual(type(base1.updated_at), datetime.datetime)
-        self.asserEqual(type(str(base1)), str)
+        self.assertEqual(type(str(base1)), str)
         self.assertEqual(type(base1.to_dict()), dict)
 
     def test_str(self):
