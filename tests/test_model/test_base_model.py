@@ -30,7 +30,7 @@ class TestBaseModel(unittest.TestCase):
         """this method will test __str__ will print the correct format
         of the object representation"""
         base1 = BaseModel()
-        str1 = f'[BaseModel] {(base1.id)} {base1.__dict__}'
+        str1 = f'[BaseModel] ({base1.id}) {base1.__dict__}'
         self.assertEqual(str(base1), str1)
 
     def test_to_dict(self):
@@ -47,6 +47,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertIn('id', dict2.keys())
         self.assertIn('created_at', dict2.keys())
         self.assertIn('updated_at', dict2.keys())
-        self.asserEqual(type(dict2['id']), str)
+        self.assertEqual(type(dict2['id']), str)
         self.assertEqual(type(dict2['created_at']), str)
         self.assertEqual(type(dict2['updated_at']), str)
