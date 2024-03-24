@@ -19,6 +19,7 @@ class TestBaseModel(unittest.TestCase):
     def test_type(self):
         """this method will test types of attributes of
         BaseModel object is correct"""
+        base1 = BaseModel()
         self.assertEqual(type(base1.id), str)
         self.assertEqual(type(base1.created_at), datetime.datetime)
         self.assertEqual(type(base1.updated_at), datetime.datetime)
@@ -28,13 +29,15 @@ class TestBaseModel(unittest.TestCase):
     def test_str(self):
         """this method will test __str__ will print the correct format
         of the object representation"""
+        base1 = BaseModel()
         str1 = f'[BaseModel] {(base1.id)} {base1.__dict__}'
         self.assertEqual(str(base1), str1)
 
     def test_to_dict(self):
         """this method will test to_dict method will display the correct
         dictionary format and gives us the dictionaty representation"""
-        dict1 = base1.__dict__
+        base1 = BaseModel()
+        dict1 = base1.__dict__.copy()
         dict1['__class__'] = 'BaseModel'
         dict1['created_at'] = base1.created_at.isoformat()
         dict1['updated_at'] = base1.updated_at.isoformat()
