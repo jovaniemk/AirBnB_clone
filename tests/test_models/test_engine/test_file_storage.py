@@ -19,15 +19,15 @@ class test_file_storage(unittest.TestCase):
         """this method will test the types of attributes are
         correct"""
         f1 = FileStorage()
-        self.assertEqual(FileStorage._FileStorage.__file_path, str)
-        self.assertEqual(FileStorage._FileStorage.__objects, dict)
+        self.assertEqual(f1._FileStorage__file_path, str)
+        self.assertEqual(f1._FileStorage__objects, dict)
 
     def test_values(self):
         """this method will test the values of attributes are
         correct"""
         f1 = FileStorage()
-        self.assertEqual(FileStorage._FileStorage.__file_path, "file.json")
-        self.assertEqual(FileStorage._FileStorage.__objects, {})
+        self.assertEqual(f1._FileStorage__file_path, "file.json")
+        self.assertEqual(f1._FileStorage.__objects, {})
 
     def test_all(self):
         """this method will check wheter the all method of
@@ -42,24 +42,24 @@ class test_file_storage(unittest.TestCase):
         base1 = BaseModel()
         str1 = f'BaseModel.{base1.id}'
         f1.new(base1)
-        self.assertIn(str1, FileStorage._FileStorage.__objects.keys())
+        self.assertIn(str1, f1._FileStorage__objects.keys())
 
     def test_save(self):
         """this method will check whether the save method saves
         the json serialization of te object"""
         f1 = FileStorage()
         f1.save()
-        self.assertTrue(os.path.isfile(FileStorage._FileStorage.__file_path))
-        self.assertTrue(os.path.getsize(FileStorage._FileStorage.__file_path) > 0)
-
+        self.assertTrue(os.path.isfile(f1._FileStorage__file_path))
+        self.assertTrue(os.path.getsize(f1._FileStorage__file_path)
+                        > 0)
     def test_reload(self):
         """this method will check whether the reload method
         returns object representation of a class"""
         f1 = FileStorage()
         base1 = BaseModel()
         f1.new(base1)
-        dict1 = FileStorage._FileStorage.__objects
+        dict1 = f1._FileStorage__objects
         f1.save()
         f1.reload()
-        dict2 = FileStorage._FileStorage.__objects
+        dict2 = f1._FileStorage__objects
         self.assertEqual(dict1, dict2)
