@@ -52,6 +52,7 @@ class test_file_storage(unittest.TestCase):
         self.assertTrue(os.path.isfile(f1._FileStorage__file_path))
         self.assertTrue(os.path.getsize(f1._FileStorage__file_path)
                         > 0)
+
     def test_reload(self):
         """this method will check whether the reload method
         returns object representation of a class"""
