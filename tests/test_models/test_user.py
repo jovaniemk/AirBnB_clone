@@ -10,6 +10,7 @@ import datetime
 class test_user(unittest.TestCase):
     """this class contains these methods to test
     class User"""
+
     def test_type(self):
         """this method will test wheter the attributes of User are
         in their correct type"""
