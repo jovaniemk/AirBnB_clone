@@ -26,7 +26,7 @@ class test_place(unittest.TestCase):
         self.assertEqual(type(place1.price_by_night), int)
         self.assertEqual(type(place1.latitude), float)
         self.assertEqual(type(place1.longitude), float)
-        sef.assertEqual(type(place1. amnity_ids), list)
+        self.assertEqual(type(place1.amenity_ids), list)
 
     def test_value(self):
         """this method will test whether values of attributes
