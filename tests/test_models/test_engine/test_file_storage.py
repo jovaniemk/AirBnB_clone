@@ -41,7 +41,7 @@ class test_file_storage(unittest.TestCase):
         base1 = BaseModel()
         str1 = f'BaseModel.{base1.id}'
         f1.new(base1)
-        self.assertIn(str1, storage.keys())
+        self.assertIn(str1, f1._FileStorage__objects.keys())
 
     def test_save(self):
         """this method will check whether the save method saves
