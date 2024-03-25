@@ -42,4 +42,4 @@ class test_place(unittest.TestCase):
         self.assertEqual(place1.price_by_night, 0)
         self.assertEqual(place1.latitude, 0.0)
         self.assertEqual(place1.longitude, 0.0)
-        self.assertEqual(place1. amnity_ids, [])
+        self.assertEqual(place1. amenity_ids, [])
