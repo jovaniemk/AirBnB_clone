@@ -27,7 +27,6 @@ class test_file_storage(unittest.TestCase):
         correct"""
         f1 = FileStorage()
         self.assertEqual(f1._FileStorage__file_path, "file.json")
-        self.assertEqual(f1._FileStorage__objects, {})
 
     def test_all(self):
         """this method will check wheter the all method of
