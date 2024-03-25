@@ -23,4 +23,4 @@ class test_amenity(unittest.TestCase):
         """this method will test the types of Amenity
         attributes are correct in their type"""
         a1 = Amenity()
-        self.assertEqual(a1.name, str)
+        self.assertEqual(a1.name, "")
