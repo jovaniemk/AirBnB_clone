@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""this module conatins unittest for Amenity class"""
+"""this module conatins unittest for Place class"""
 
 
 import unittest
