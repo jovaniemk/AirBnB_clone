@@ -3,7 +3,7 @@
 
 
 import unittest
-from models.place import Review
+from models.review import Review
 from uuid import uuid4
 import datetime
 
