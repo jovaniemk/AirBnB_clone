@@ -7,6 +7,7 @@ from models.user import User
 from uuid import uuid4
 import datetime
 
+
 class test_user(unittest.TestCase):
     """this class contains these methods to test
     class User"""
