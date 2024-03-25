@@ -50,3 +50,10 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(type(dict2['id']), str)
         self.assertEqual(type(dict2['created_at']), str)
         self.assertEqual(type(dict2['updated_at']), str)
+
+    def test_save(self):
+        """this method will test save method will save the object and
+        updates the updated_at time to the current time"""
+        base1 = BaseModel()
+        base1.save()
+        self.assertNotEqual(base1.created_at, base1.updated_at)
