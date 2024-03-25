@@ -19,15 +19,15 @@ class test_file_storage(unittest.TestCase):
         """this method will test the types of attributes are
         correct"""
         f1 = FileStorage()
-        self.assertEqual(f1._FileStorage__file_path, str)
-        self.assertEqual(f1._FileStorage__objects, dict)
+        self.assertEqual(type(f1._FileStorage__file_path), str)
+        self.assertEqual(type(f1._FileStorage__objects), dict)
 
     def test_values(self):
         """this method will test the values of attributes are
         correct"""
         f1 = FileStorage()
         self.assertEqual(f1._FileStorage__file_path, "file.json")
-        self.assertEqual(f1._FileStorage.__objects, {})
+        self.assertEqual(f1._FileStorage__objects, {})
 
     def test_all(self):
         """this method will check wheter the all method of
