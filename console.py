@@ -198,6 +198,7 @@ class HBNBCommand(cmd.Cmd):
                 self.onecmd(" ".join(line))
                 return None
         return cmd.Cmd.default(self, line)
+
     def do_quit(self, line):
         """ quit will terminate the console"""
         return True
@@ -208,7 +209,7 @@ class HBNBCommand(cmd.Cmd):
 
     def emptyline(self):
         """
-        Ignore blank lines (ENTER)
+        when blanck lines are enterd, it will show nothing
         """
         pass
 
