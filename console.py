@@ -166,7 +166,8 @@ class HBNBCommand(cmd.Cmd):
         i = 0
         while i < len(list1):
             tmp1 = list1[i].replace('{', '').replace('}', '').replace(':', '')
-            tmp2 = list1[i + 1].replace('{', '').replace('}', '').replace(':', '')
+            tmp2 = list1[i + 1].replace('{', '').replace('}', ''). \
+                    replace(':', '')
             line = tmp1.strip() + " " + tmp2.strip()
             self.onecmd(command + " " + line)
             i = i + 2
