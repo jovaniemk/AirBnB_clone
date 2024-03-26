@@ -160,19 +160,29 @@ class HBNBCommand(cmd.Cmd):
                     count = count + 1
             print(count)
 
-    def update_dict(self, command, line):
-        attr = line.split("{")[1][0:-2].replace(":", "").split(", ")
-        for item in attr:
-            comm = command + " " + item
-            self.onecmd(comm)
+    def update_dictionary(self, command, list1):
+        """updates an object of a class by using
+        dictionay key:value pairs"""
+        i = 0
+        while i < len(list1):
+            tmp1 = list1[i].replace('{', '').replace('}', '').replace(':', '')
+            tmp2 = list1[i + 1].replace('{', '').replace('}', '').replace(':', '')
+            line = tmp1.strip() + " " + tmp2.strip()
+            self.onecmd(command + " " + line)
+            i = i + 2
 
     def default(self, line):
+        """this method will be called when a command which is not
+        defined entered in command line, for example User.all()
+        in these secenarion this method will parse the entered line,
+        and convert it to previously defined command or if the command is
+        not found show error messgae"""
         if "." in line:
             line = line.replace('.', ' ').replace('(', ' ').replace(')', ' ')
             line = line.replace(',', ' ').replace('"', '').replace("'", "")
             line = line.strip().split(" ")
             line[0], line[1] = line[1], line[0]
-            j  = 0
+            j = 0
             for i in range(len(line)):
                 if line[i] == '':
                     j = j + 1
@@ -180,10 +190,14 @@ class HBNBCommand(cmd.Cmd):
                 line.remove('')
             methods = ["all", "count", "show", "destroy", "update"]
             if line[0] in methods and line[1] in HBNBCommand.class_name:
+                if line[0] == 'update' and '{' in str(line):
+                    x = " ".join(line[:3])
+                    y = line[3:]
+                    self.update_dictionary(x, y)
+                    return None
                 self.onecmd(" ".join(line))
                 return None
         return cmd.Cmd.default(self, line)
-
     def do_quit(self, line):
         """ quit will terminate the console"""
         return True
