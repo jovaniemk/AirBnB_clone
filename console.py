@@ -1,171 +1,164 @@
 #!/usr/bin/python3
-"""
-CLI console for the AirBNB program
-"""
+"""this module defines HBNBCommand class, which
+will run our console, which will help us to perform
+create, update, show, destory differnt obects"""
+
+
 import cmd
-from models import storage
 from models.base_model import BaseModel
 from models.user import User
-from models.amenity import Amenity
-from models.state import State
 from models.place import Place
+from models.state import State
 from models.city import City
+from models.amenity import Amenity
 from models.review import Review
 from models.engine.file_storage import FileStorage
+from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
-    """
-    CLI command handling methods
-    """
-    prompt = "(hbnb) "
 
-    CLASSES = [
-            "BaseModel", "User", "State",
-            "Amenity", "Place", "City", "Review"
-            ]
+    prompt = "(hbnb) "
+    class_name = ["BaseModel", "User", "State", "City", "Place",
+                  "Amenity", "Review"]
+    class_ = [BaseModel, User, State, City, Place, Amenity, Review]
 
     def do_create(self, line):
-        """
-        Creates an object instance
-        """
-        args = line.split(" ")
-        if line == "":
+        """ create a new object of the following classes
+        BaseModel, User, State, City, Amenity, Place, Review
+        if create is only specified or class name which doesn't
+        belong in the above list is specified, it will show Error
+        message"""
+        line = line.split(" ")
+        if line[0] == "":
             print("** class name missing **")
-        elif line not in HBNBCommand.CLASSES:
+        elif line[0] not in HBNBCommand.class_name:
             print("** class doesn't exist **")
         else:
-            if args[0] == "BaseModel":
-                base = BaseModel()
-            elif args[0] == "User":
-                base = User()
-            elif args[0] == "State":
-                base = State()
-            elif args[0] == "Amenity":
-                base = Amenity()
-            elif args[0] == "Place":
-                base = Place()
-            elif args[0] == "City":
-                base = City()
-            elif args[0] == "Review":
-                base = Review()
-            print(base.id)
-            storage.save()
+            for i in range(len(HBNBCommand.class_name)):
+                if line[0] == HBNBCommand.class_name[i]:
+                    obj1 = HBNBCommand.class_[i]()
+                    storage.save()
+                    print(obj1.id)
 
     def do_show(self, line):
-        """
-        Print an instance string rep
-        """
-        objs = storage.all()
-        args = line.split(" ")
-        if line == "":
+        """ Prints the string representation of an instance based
+        on the class name and id, both class name and id have to
+        be specified, otherwise it will show error message"""
+        line = line.split(" ")
+        if line[0] == "":
             print("** class name missing **")
-        elif args[0] not in HBNBCommand.CLASSES:
+        elif line[0] not in HBNBCommand.class_name:
             print("** class doesn't exist **")
-        elif len(args) < 2:
+        elif len(line) < 2:
             print("** instance id missing **")
         else:
-            args[1] = args[1].replace('"', '') \
-                    if args[1][0] == '"' else args[1]
-            classname_id = args[0] + "." + args[1]
-            if classname_id not in objs.keys():
+            all_obj = storage.all()
+            if (line[0] + "." + line[1]) not in all_obj.keys():
                 print("** no instance found **")
             else:
-                print(objs[classname_id])
+                print(all_obj[line[0] + "." + line[1]])
 
     def do_destroy(self, line):
-        """
-        Destroy an instance
-        """
-        objs = storage.all()
-        args = line.split(" ")
-        if line == "":
+        """ Deletes an instance based on the class name and id.
+        if both class and id are given and if both are correct,
+        the instance with the given class name and ID will be
+        deleted"""
+        line = line.split(" ")
+        if line[0] == "":
             print("** class name missing **")
-        elif args[0] not in HBNBCommand.CLASSES:
+        elif line[0] not in HBNBCommand.class_name:
             print("** class doesn't exist **")
-        elif len(args) < 2:
+        elif len(line) < 2:
             print("** instance id missing **")
         else:
-            args[1] = args[1].replace('"', '') \
-                    if args[1][0] == '"' else args[1]
-            classname_id = args[0] + "." + args[1]
-            if classname_id not in objs.keys():
+            all_obj = storage.all()
+            if (line[0] + "." + line[1]) not in all_obj.keys():
                 print("** no instance found **")
             else:
-                del objs[classname_id]
+                del all_obj[line[0] + "." + line[1]]
                 storage.save()
 
     def do_all(self, line):
-        """
-        Print all string rep of instance
-        """
-        objs = storage.all()
-        args = line.split(" ")
-        if args[0] != "":
-            if args[0] not in HBNBCommand.CLASSES:
-                print("** class doesn't exist **")
-            else:
-                all_list = []
-                for obj in objs:
-                    if obj.startswith(args[0]):
-                        all_list.append(str(objs[obj]))
-                print(all_list)
+        """ Prints all string representation of all instances
+        based or not on the class name. if all alone is specified
+        it will list all objects. if class name is specifed along
+        with all, all list which belong to the specified class will
+        be listed"""
+        line = line.split(" ")
+        all_obj = storage.all()
+        list1 = []
+        if line[0] == "":
+            for keys, values in all_obj.items():
+                list1.append(str(values))
+            print(list1)
+        elif line[0] in HBNBCommand.class_name:
+            for keys, values in all_obj.items():
+                tmp = keys.split(".")
+                if tmp[0] == line[0]:
+                    list1.append(str(values))
+            print(list1)
         else:
-            all_list = []
-            for obj in objs:
-                all_list.append(str(objs[obj]))
-            print(all_list)
+            print("** class doesn't exist **")
 
     def do_update(self, line):
-        """
-        Update an instance
-        """
-        objs = storage.all()
-        args = line.split(" ")
-        if line == "":
+        """Updates an instance based on the class name and id by adding
+        or updating attribute (save the change into the JSON file)"""
+        line = line.split(" ")
+        if line[0] == "":
             print("** class name missing **")
-        elif args[0] not in HBNBCommand.CLASSES:
+        elif line[0] not in HBNBCommand.class_name:
             print("** class doesn't exist **")
-        elif len(args) < 2:
+        elif len(line) < 2:
             print("** instance id missing **")
         else:
-            args[1] = args[1].replace('"', '') \
-                    if args[1][0] == '"' else args[1]
-            classname_id = args[0] + "." + args[1]
-            if classname_id not in objs.keys():
+            all_obj = storage.all()
+            if (line[0] + "." + line[1]) not in all_obj.keys():
                 print("** no instance found **")
-            elif len(args) < 3:
+            elif len(line) < 3:
                 print("** attribute name missing **")
-            elif len(args) < 4:
+            elif len(line) < 4:
                 print("** value missing **")
             else:
-                args[2] = args[2].replace('"', '').replace("'", "")
-                obj = objs[classname_id]
-                if args[3].startswith('"') and args[3].endswith('"') or \
-                        args[3].startswith("'") and args[3].endswith("'"):
-                    setattr(obj, args[2], str(args[3][1:-1]))
-                elif args[3].startswith('"') and not args[3].endswith('"') or \
-                        args[3].startswith("'") and not args[3].endswith("'"):
-                    str_value = ""
-                    for arg in args[3:]:
-                        str_value += " " + arg
-                        if arg.endswith('"') or arg.endswith("'"):
-                            break
-                    setattr(obj, args[2], str(str_value[2:-1]))
-                elif "." in args[3]:
-                    setattr(obj, args[2], float(args[3]))
+                obj = all_obj[line[0] + "." + line[1]]
+                if line[3].startswith('"') or line[3].startswith("'"):
+                    if line[3].endswith('"') or line[3].endswith("'"):
+                        line[3] = line[3].replace('"', '').replace("'", "")
+                        setattr(obj, line[2], line[3])
+                    else:
+                        str1 = line[3] + " " + line[4]
+                        str1 = str1.replace('"', '').replace("'", "")
+                        setattr(obj, line[2], str1)
+                elif "." in line[3]:
+                    try:
+                        setattr(obj, line[2], float(line[3]))
+                    except (TypeError, ValueError):
+                        setattr(obj, line[2], line[3])
                 else:
-                    setattr(obj, args[2], int(args[3]))
+                    try:
+                        setattr(obj, line[2], int(line[3]))
+                    except (TypeError, ValueError):
+                        setattr(obj, line[2], line[3])
                 storage.save()
 
     def do_count(self, line):
-        """
-        Count objects
-        """
-        objs = storage.all()
-        args = line.split(" ")
-        obj_names = list(map(lambda obj: type(obj).__name__, objs.values()))
-        print("{}".format(obj_names.count(line)))
+        """counts the number of previously created instances of
+        a specified class, if the specified class does not belong
+        to the defined classes or the class was not sepecified error
+        message will be shown"""
+        line = line.split(" ")
+        if line[0] == "":
+            print("** class name missing **")
+        elif line[0] not in HBNBCommand.class_name:
+            print("** class doesn't exist **")
+        elif line[0] in HBNBCommand.class_name:
+            all_obj = storage.all()
+            count = 0
+            for keys, values in all_obj.items():
+                tmp = keys.split(".")
+                if tmp[0] == line[0]:
+                    count = count + 1
+            print(count)
 
     def update_dict(self, command, line):
         attr = line.split("{")[1][0:-2].replace(":", "").split(", ")
@@ -193,18 +186,12 @@ class HBNBCommand(cmd.Cmd):
                 return None
         return cmd.Cmd.default(self, line)
 
-    def do_EOF(self, line):
-        """
-        End of CLI
-        Usage: CTRL+D
-        """
+    def do_quit(self, line):
+        """ quit will terminate the console"""
         return True
 
-    def do_quit(self, line):
-        """
-        End OF CLI
-        Usage: quit
-        """
+    def do_EOF(self, line):
+        """ pressing ctlr+d will exit the console"""
         return True
 
     def emptyline(self):
