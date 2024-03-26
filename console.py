@@ -167,22 +167,14 @@ class HBNBCommand(cmd.Cmd):
             self.onecmd(comm)
 
     def default(self, line):
-        """
-        other CL handlers for commands like:
-            <class name>.all()
-            <class name>.count()
-        """
-        METHODS = ["all", "count", "show", "destroy", "update"]
-
         if "." in line:
-            command = line[:-1].replace(",", "")\
-                    .replace("(", " ").replace(".", " ").split(" ")
-            command[0], command[1] = command[1], command[0]
-            if command[1] in HBNBCommand.CLASSES and command[0] in METHODS:
-                if command[0] == "update" and "{" in line:
-                    self.update_dict(" ".join(command[:3]), line)
-                    return None
-                self.onecmd(" ".join(command))
+            line = line.replace('.', ' ').replace('(', ' ').replace(')', ' ')
+            line = line.replace(',', ' ').replace('"', '').replace("'", "")
+            line = line.strip().split(" ")
+            line[0], line[1] = line[1], line[0]
+            methods = ["all", "count", "show", "destroy", "update"]
+            if line[0] in methods and line[1] in HBNBCommand.class_name:
+                self.onecmd(" ".join(line))
                 return None
         return cmd.Cmd.default(self, line)
 
