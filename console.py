@@ -172,6 +172,7 @@ class HBNBCommand(cmd.Cmd):
             line = line.replace(',', ' ').replace('"', '').replace("'", "")
             line = line.strip().split(" ")
             line[0], line[1] = line[1], line[0]
+            j  = 0
             for i in range(len(line)):
                 if line[i] == '':
                     j = j + 1
